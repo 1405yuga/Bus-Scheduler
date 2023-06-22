@@ -1,6 +1,8 @@
 package com.example.busschedule
 
 import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.Database.Schedule
@@ -15,6 +17,19 @@ class BustStopAdapter(private val onItemClicked : (Schedule)-> Unit) : ListAdapt
             binding.stopNameTextView.text = schedule.stopName
             binding.arrivalTimeTextView.text = SimpleDateFormat("h:mm a").format(schedule.arrivalTime.toLong()*1000)
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusStopViewHolder {
+        val viewHolder = BusStopViewHolder(BusStopItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            onItemClicked(getItem(position))
+        }
+        return viewHolder
+    }
+
+    override fun onBindViewHolder(holder: BusStopViewHolder, position: Int) {
+        TODO("Not yet implemented")
     }
 
 
