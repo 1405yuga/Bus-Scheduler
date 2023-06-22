@@ -27,6 +27,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.ViewModels.BusSceduleViewFactory
 import com.example.busschedule.ViewModels.BusScheduleViewModel
 import com.example.busschedule.databinding.FullScheduleFragmentBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class FullScheduleFragment: Fragment() {
 
@@ -64,6 +67,11 @@ class FullScheduleFragment: Fragment() {
         }
 
         recyclerView.adapter = bustopAdapter
+
+        //update live list
+        GlobalScope.launch(Dispatchers.IO) {
+            bustopAdapter.submitList(viewModel.fullScedule())
+        }
     }
 
     override fun onDestroyView() {
