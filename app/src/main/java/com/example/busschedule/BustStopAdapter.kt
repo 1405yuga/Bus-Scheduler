@@ -3,6 +3,7 @@ package com.example.busschedule
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.Database.Schedule
@@ -10,6 +11,18 @@ import com.example.busschedule.databinding.BusStopItemBinding
 import java.text.SimpleDateFormat
 
 class BustStopAdapter(private val onItemClicked : (Schedule)-> Unit) : ListAdapter<Schedule,BustStopAdapter.BusStopViewHolder>(DiffCallback) {
+    companion  object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Schedule>() {
+            override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 
     class BusStopViewHolder(private var binding: BusStopItemBinding):RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
@@ -31,6 +44,7 @@ class BustStopAdapter(private val onItemClicked : (Schedule)-> Unit) : ListAdapt
     override fun onBindViewHolder(holder: BusStopViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
 
 
 }
