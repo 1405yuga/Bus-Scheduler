@@ -29,7 +29,7 @@ class BustStopAdapter(private val onItemClicked : (Schedule)-> Unit) : ListAdapt
     }
 
     override fun onBindViewHolder(holder: BusStopViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(getItem(position))
     }
 
 
