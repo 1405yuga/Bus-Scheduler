@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.ViewModels.BusSceduleViewFactory
@@ -53,6 +54,16 @@ class FullScheduleFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val bustopAdapter = BustStopAdapter {
+            val action =
+                FullScheduleFragmentDirections.actionFullScheduleFragmentToStopScheduleFragment(
+                    stopName = it.stopName
+                )
+            view.findNavController().navigate(action)
+        }
+
+        recyclerView.adapter = bustopAdapter
     }
 
     override fun onDestroyView() {
