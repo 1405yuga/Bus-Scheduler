@@ -1,7 +1,9 @@
 package com.example.busschedule.Database
 
+import androidx.room.Dao
 import androidx.room.Query
 
+@Dao
 interface ScheduleDao {
 
     @Query("SELECT * FROM Schedule ORDER BY arrival_time ASC")
