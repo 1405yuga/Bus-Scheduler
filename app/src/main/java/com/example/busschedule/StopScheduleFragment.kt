@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.ViewModels.BusSceduleViewFactory
@@ -78,7 +79,11 @@ class StopScheduleFragment: Fragment() {
 
 
         GlobalScope.launch (Dispatchers.IO){
-            stopAdapter.submitList(viewModel.scheduleForStop(stopName))
+            lifecycle.coroutineScope.launch {
+                viewModel.scheduleForStop(stopName).collect(){
+                    stopAdapter.submitList(it)
+                }
+            }
         }
     }
 
